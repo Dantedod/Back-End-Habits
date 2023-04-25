@@ -28,10 +28,9 @@ model Day {
   id   String   @id @default(uuid())
   date DateTime
 
-  //pra n ficar perdido, caso eu me esqueça, isso ta aki pois ta relacionado
   dayHabits DayHabit[]
 
-  @@unique([date]) // Aki ta falando q aki cada registro dentro da tabela day, precisa ter  o campo date unico
+  @@unique([date])
   @@map("days")
 }
 
@@ -40,15 +39,12 @@ model HabbitWeelDays {
   habit_id String
   week_day Int
 
-  //aki mostra q ele se relaciona com a tabela gabit
   habit Habit @relation(fields: [habit_id], references: [id])
 
-  //o msm habito so pode ta disponivel uma vez no msm dia
   @@unique([habit_id, week_day])
   @@map("habbit_week_days")
 }
 
-//tabela pivo = tabela que eh gerada apos o relacionamento entre tabelas
 model DayHabit {
   id String @id @default(uuid())
 
@@ -58,16 +54,6 @@ model DayHabit {
   day   Day   @relation(fields: [day_id], references: [id])
   habit Habit @relation(fields: [habit_id], references: [id])
 
-  //aki falando tipo, n posso ter o msm habito completado 2 vezes no msm dia
   @@unique([day_id, habit_id])
   @@map("days_habits")
 }
-
-//npx prisma studio
-// Ve o banco de dados
-
-//npm run dev para fazer ficar rodando o server.ts, pq faz rodar o script
-
-//npx prisma migrate dev : Vai detectar automaticamente todas as mudanças feitas no bando de dados e pedir para da um nome para esas mudanças
-
-//npx prismadb seed para popular o bando de dados

@@ -5,7 +5,6 @@ import { appRoutes } from "./routes"
 
 const app = fastify()
 
-//Com isso, o front-end ja vai conseguir acessar os dados do back-end
 app.register(cors)
 app.register(appRoutes)
 app
